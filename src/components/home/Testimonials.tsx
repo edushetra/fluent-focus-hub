@@ -1,0 +1,193 @@
+import { useState } from "react";
+import { Card, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { ChevronLeft, ChevronRight, Star, Quote } from "lucide-react";
+
+const testimonials = [
+  {
+    id: 1,
+    name: "Priya Sharma",
+    role: "Software Developer",
+    city: "Bangalore",
+    program: "1:1 Classes",
+    before: "I was afraid to speak in team meetings and struggled with technical presentations.",
+    after: "Now I confidently lead client calls and gave a presentation to 200+ people at our company conference.",
+    rating: 5,
+    videoUrl: "#"
+  },
+  {
+    id: 2,
+    name: "Rajesh Gupta",
+    role: "Business Analyst",
+    city: "Mumbai", 
+    program: "Small Group Classes",
+    before: "My English was okay for reading and writing, but speaking fluently was a challenge.",
+    after: "I can now participate actively in international calls and even mentor junior team members.",
+    rating: 5,
+    videoUrl: "#"
+  },
+  {
+    id: 3,
+    name: "Anita Desai",
+    role: "Homemaker",
+    city: "Delhi",
+    program: "Big Group Classes",
+    before: "I wanted to help my kids with their English and gain confidence for job interviews.",
+    after: "I've started my own online tutoring business and feel confident speaking with parents and students.",
+    rating: 5,
+    videoUrl: "#"
+  },
+  {
+    id: 4,
+    name: "Vikram Singh",
+    role: "Sales Manager", 
+    city: "Pune",
+    program: "1:1 Classes",
+    before: "I was losing deals because I couldn't communicate value propositions effectively to clients.",
+    after: "My sales have increased by 40% and I was promoted to Regional Sales Head last month.",
+    rating: 5,
+    videoUrl: "#"
+  },
+  {
+    id: 5,
+    name: "Meera Patel",
+    role: "College Student",
+    city: "Ahmedabad",
+    program: "Small Group Classes", 
+    before: "I was nervous about group discussions and couldn't express my ideas clearly.",
+    after: "I won the college debate championship and got selected for the student council.",
+    rating: 5,
+    videoUrl: "#"
+  },
+  {
+    id: 6,
+    name: "Arjun Nair",
+    role: "Team Lead",
+    city: "Chennai",
+    program: "Leadership Training",
+    before: "Leading international teams was stressful due to communication barriers.",
+    after: "I now manage a team of 25 across 3 countries and received 'Manager of the Year' award.",
+    rating: 5,
+    videoUrl: "#"
+  }
+];
+
+const Testimonials = () => {
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  const nextTestimonial = () => {
+    setCurrentIndex((prev) => (prev + 1) % Math.ceil(testimonials.length / 2));
+  };
+
+  const prevTestimonial = () => {
+    setCurrentIndex((prev) => (prev - 1 + Math.ceil(testimonials.length / 2)) % Math.ceil(testimonials.length / 2));
+  };
+
+  const currentTestimonials = testimonials.slice(currentIndex * 2, currentIndex * 2 + 2);
+
+  return (
+    <section className="py-20 bg-white">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="text-center mb-16">
+          <h2 className="font-poppins font-bold text-4xl lg:text-5xl text-primary mb-6">
+            Success Stories
+          </h2>
+          <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+            Real transformations from learners across India
+          </p>
+        </div>
+
+        {/* Testimonials Carousel */}
+        <div className="relative">
+          <div className="grid md:grid-cols-2 gap-8 mb-8">
+            {currentTestimonials.map((testimonial) => (
+              <Card key={testimonial.id} className="program-card">
+                <CardContent className="p-8">
+                  {/* Quote Icon */}
+                  <Quote className="w-8 h-8 text-secondary mb-6" />
+                  
+                  {/* Rating */}
+                  <div className="flex items-center mb-4">
+                    {[...Array(testimonial.rating)].map((_, i) => (
+                      <Star key={i} className="w-5 h-5 text-accent fill-current" />
+                    ))}
+                  </div>
+
+                  {/* Before/After */}
+                  <div className="space-y-4 mb-6">
+                    <div className="bg-red-50 border-l-4 border-red-400 p-4 rounded-r-lg">
+                      <p className="text-sm font-medium text-red-800 mb-1">Before:</p>
+                      <p className="text-red-700 text-sm">{testimonial.before}</p>
+                    </div>
+                    <div className="bg-green-50 border-l-4 border-green-400 p-4 rounded-r-lg">
+                      <p className="text-sm font-medium text-green-800 mb-1">After:</p>
+                      <p className="text-green-700 text-sm">{testimonial.after}</p>
+                    </div>
+                  </div>
+
+                  {/* User Info */}
+                  <div className="border-t pt-6">
+                    <h4 className="font-poppins font-semibold text-lg text-primary">
+                      {testimonial.name}
+                    </h4>
+                    <p className="text-muted-foreground text-sm">
+                      {testimonial.role} • {testimonial.city}
+                    </p>
+                    <p className="text-secondary text-sm font-medium mt-1">
+                      Program: {testimonial.program}
+                    </p>
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+
+          {/* Navigation */}
+          <div className="flex items-center justify-center space-x-4">
+            <Button
+              variant="outline"
+              size="icon"
+              onClick={prevTestimonial}
+              className="rounded-full"
+            >
+              <ChevronLeft className="w-4 h-4" />
+            </Button>
+            
+            <div className="flex space-x-2">
+              {Array.from({ length: Math.ceil(testimonials.length / 2) }).map((_, index) => (
+                <button
+                  key={index}
+                  onClick={() => setCurrentIndex(index)}
+                  className={`w-2 h-2 rounded-full transition-colors duration-200 ${
+                    index === currentIndex ? 'bg-secondary' : 'bg-gray-300'
+                  }`}
+                />
+              ))}
+            </div>
+            
+            <Button
+              variant="outline"
+              size="icon"
+              onClick={nextTestimonial}
+              className="rounded-full"
+            >
+              <ChevronRight className="w-4 h-4" />
+            </Button>
+          </div>
+        </div>
+
+        {/* Bottom CTA */}
+        <div className="text-center mt-16">
+          <p className="text-muted-foreground mb-6 text-lg">
+            Ready to write your own success story?
+          </p>
+          <Button asChild size="lg" className="btn-hero">
+            <a href="/book-demo">Start Your Journey Today</a>
+          </Button>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+export default Testimonials;
