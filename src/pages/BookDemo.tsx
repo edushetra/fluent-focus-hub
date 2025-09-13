@@ -14,6 +14,7 @@ import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import WhatsAppFloat from "@/components/layout/WhatsAppFloat";
 import { Calendar, Clock, CheckCircle } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
 
 const formSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters"),
@@ -50,11 +51,31 @@ const BookDemo = () => {
 
   const onSubmit = async (data: FormData) => {
     try {
-      // Simulate API call
-      console.log("Demo booking data:", data);
-      
-      // Here you would normally send data to your backend
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      // Extract UTM parameters from URL
+      const urlParams = new URLSearchParams(window.location.search);
+      const utmSource = urlParams.get('utm_source');
+      const utmMedium = urlParams.get('utm_medium');
+      const utmCampaign = urlParams.get('utm_campaign');
+
+      // Save to Supabase
+      const { error } = await supabase.from('demo_bookings').insert({
+        name: data.name,
+        whatsapp: data.whatsapp,
+        email: data.email,
+        city: data.city,
+        current_level: data.currentLevel,
+        goal: data.goal,
+        preferred_time: data.preferredTime,
+        program_interest: data.programInterest,
+        consent: data.consent,
+        utm_source: utmSource,
+        utm_medium: utmMedium,
+        utm_campaign: utmCampaign
+      });
+
+      if (error) {
+        throw error;
+      }
       
       setIsSubmitted(true);
       toast({
@@ -62,6 +83,7 @@ const BookDemo = () => {
         description: "We'll contact you within 24 hours to schedule your demo.",
       });
     } catch (error) {
+      console.error('Error saving demo booking:', error);
       toast({
         title: "Error",
         description: "Something went wrong. Please try again.",

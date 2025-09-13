@@ -7,6 +7,7 @@ import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import WhatsAppFloat from "@/components/layout/WhatsAppFloat";
 import { CheckCircle, BookOpen, Users, Calendar } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
 
 const questions = [
   {
@@ -135,7 +136,7 @@ const LevelTest = () => {
     setIsStarted(true);
   };
 
-  const handleAnswer = (answerIndex: number) => {
+  const handleAnswer = async (answerIndex: number) => {
     const newAnswers = [...answers, answerIndex];
     setAnswers(newAnswers);
 
@@ -159,6 +160,27 @@ const LevelTest = () => {
       }
 
       setResult(level);
+      
+      // Save test result to Supabase
+      try {
+        const urlParams = new URLSearchParams(window.location.search);
+        const utmSource = urlParams.get('utm_source');
+        const utmMedium = urlParams.get('utm_medium');
+        const utmCampaign = urlParams.get('utm_campaign');
+
+        await supabase.from('level_test_results').insert({
+          score: correctAnswers,
+          total_questions: questions.length,
+          percentage: percentage,
+          level: level,
+          recommended_programs: programRecommendations[level].programs,
+          utm_source: utmSource,
+          utm_medium: utmMedium,
+          utm_campaign: utmCampaign
+        });
+      } catch (error) {
+        console.error('Error saving test result:', error);
+      }
       
       toast({
         title: "Test Completed!",

@@ -12,6 +12,7 @@ import { useToast } from "@/hooks/use-toast";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import WhatsAppFloat from "@/components/layout/WhatsAppFloat";
+import { supabase } from "@/integrations/supabase/client";
 import { 
   Building2, 
   Users, 
@@ -100,14 +101,29 @@ const ForCorporates = () => {
 
   const onSubmit = async (data: FormData) => {
     try {
-      console.log("Corporate inquiry data:", data);
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      // Save to Supabase
+      const { error } = await supabase.from('corporate_inquiries').insert({
+        company_name: data.companyName,
+        contact_name: data.contactName,
+        email: data.email,
+        phone: data.phone,
+        team_size: data.teamSize,
+        objectives: data.objectives,
+        timeline: data.timeline,
+        budget: data.budget
+      });
+
+      if (error) {
+        throw error;
+      }
+
       setIsSubmitted(true);
       toast({
         title: "Inquiry Submitted Successfully!",
         description: "Our corporate training team will contact you within 24 hours.",
       });
     } catch (error) {
+      console.error('Error saving corporate inquiry:', error);
       toast({
         title: "Error",
         description: "Something went wrong. Please try again.",

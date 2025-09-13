@@ -14,7 +14,147 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      corporate_inquiries: {
+        Row: {
+          budget: string | null
+          company_name: string
+          contact_name: string
+          created_at: string
+          email: string
+          id: string
+          objectives: string
+          phone: string
+          status: string
+          team_size: string
+          timeline: string
+          updated_at: string
+        }
+        Insert: {
+          budget?: string | null
+          company_name: string
+          contact_name: string
+          created_at?: string
+          email: string
+          id?: string
+          objectives: string
+          phone: string
+          status?: string
+          team_size: string
+          timeline: string
+          updated_at?: string
+        }
+        Update: {
+          budget?: string | null
+          company_name?: string
+          contact_name?: string
+          created_at?: string
+          email?: string
+          id?: string
+          objectives?: string
+          phone?: string
+          status?: string
+          team_size?: string
+          timeline?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      demo_bookings: {
+        Row: {
+          city: string
+          consent: boolean
+          created_at: string
+          current_level: string
+          email: string
+          goal: string
+          id: string
+          name: string
+          preferred_time: string
+          program_interest: string
+          status: string
+          updated_at: string
+          utm_campaign: string | null
+          utm_medium: string | null
+          utm_source: string | null
+          whatsapp: string
+        }
+        Insert: {
+          city: string
+          consent?: boolean
+          created_at?: string
+          current_level: string
+          email: string
+          goal: string
+          id?: string
+          name: string
+          preferred_time: string
+          program_interest: string
+          status?: string
+          updated_at?: string
+          utm_campaign?: string | null
+          utm_medium?: string | null
+          utm_source?: string | null
+          whatsapp: string
+        }
+        Update: {
+          city?: string
+          consent?: boolean
+          created_at?: string
+          current_level?: string
+          email?: string
+          goal?: string
+          id?: string
+          name?: string
+          preferred_time?: string
+          program_interest?: string
+          status?: string
+          updated_at?: string
+          utm_campaign?: string | null
+          utm_medium?: string | null
+          utm_source?: string | null
+          whatsapp?: string
+        }
+        Relationships: []
+      }
+      level_test_results: {
+        Row: {
+          created_at: string
+          id: string
+          level: string
+          percentage: number
+          recommended_programs: string[] | null
+          score: number
+          total_questions: number
+          utm_campaign: string | null
+          utm_medium: string | null
+          utm_source: string | null
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          level: string
+          percentage: number
+          recommended_programs?: string[] | null
+          score: number
+          total_questions: number
+          utm_campaign?: string | null
+          utm_medium?: string | null
+          utm_source?: string | null
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          level?: string
+          percentage?: number
+          recommended_programs?: string[] | null
+          score?: number
+          total_questions?: number
+          utm_campaign?: string | null
+          utm_medium?: string | null
+          utm_source?: string | null
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
