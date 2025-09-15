@@ -9,6 +9,7 @@ import LevelTest from "./pages/LevelTest";
 import Pricing from "./pages/Pricing";
 import ForCorporates from "./pages/ForCorporates";
 import NotFound from "./pages/NotFound";
+import WhatsAppFloat from "@/components/layout/WhatsAppFloat"; // ⬅️ add this
 
 const queryClient = new QueryClient();
 
@@ -24,9 +25,11 @@ const App = () => (
           <Route path="/level-test" element={<LevelTest />} />
           <Route path="/pricing" element={<Pricing />} />
           <Route path="/for-corporates" element={<ForCorporates />} />
-          {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
+
+        {/* Mount once for ALL pages */}
+        <WhatsAppFloat />
       </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>

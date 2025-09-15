@@ -1,5 +1,14 @@
 import { Link } from "react-router-dom";
-import { Facebook, Instagram, Youtube, Linkedin, Mail, Phone } from "lucide-react";
+import {
+  Facebook,
+  Instagram,
+  Youtube,
+  Linkedin,
+  Mail,
+  Phone,
+} from "lucide-react";
+
+const LOGO = "/images/OnlyLogo.png"; // served from public/images
 
 const Footer = () => {
   return (
@@ -9,25 +18,44 @@ const Footer = () => {
           {/* Brand Section */}
           <div className="md:col-span-1">
             <div className="flex items-center space-x-2 mb-6">
-              <div className="bg-secondary text-white w-10 h-10 rounded-lg flex items-center justify-center font-poppins font-bold text-xl">
-                E
-              </div>
-              <span className="font-poppins font-bold text-xl">Edushetra</span>
+              <img
+                src={LOGO}
+                alt="Edushetra Logo"
+                className="h-10 w-auto object-contain"
+              />
+              <span className="font-poppins font-bold text-xl">EduShetra</span>
             </div>
             <p className="text-white/80 mb-6 leading-relaxed">
-              India's largest network of communication trainers helping you speak fluent English and overcome the fear of public speaking.
+              India's largest network of communication trainers helping you
+              speak fluent English and overcome the fear of public speaking.
             </p>
             <div className="flex space-x-4">
-              <a href="#" className="text-white/60 hover:text-white transition-colors">
+              <a
+                href="#"
+                className="text-white/60 hover:text-white transition-colors"
+                aria-label="Facebook"
+              >
                 <Facebook className="w-5 h-5" />
               </a>
-              <a href="#" className="text-white/60 hover:text-white transition-colors">
+              <a
+                href="#"
+                className="text-white/60 hover:text-white transition-colors"
+                aria-label="Instagram"
+              >
                 <Instagram className="w-5 h-5" />
               </a>
-              <a href="#" className="text-white/60 hover:text-white transition-colors">
+              <a
+                href="#"
+                className="text-white/60 hover:text-white transition-colors"
+                aria-label="YouTube"
+              >
                 <Youtube className="w-5 h-5" />
               </a>
-              <a href="#" className="text-white/60 hover:text-white transition-colors">
+              <a
+                href="#"
+                className="text-white/60 hover:text-white transition-colors"
+                aria-label="LinkedIn"
+              >
                 <Linkedin className="w-5 h-5" />
               </a>
             </div>
@@ -35,21 +63,38 @@ const Footer = () => {
 
           {/* Quick Links */}
           <div>
-            <h3 className="font-poppins font-semibold text-lg mb-6">Quick Links</h3>
+            <h3 className="font-poppins font-semibold text-lg mb-6">
+              Quick Links
+            </h3>
             <div className="space-y-3">
-              <Link to="/courses" className="block text-white/80 hover:text-white transition-colors">
+              <Link
+                to="/courses"
+                className="block text-white/80 hover:text-white transition-colors"
+              >
                 Courses
               </Link>
-              <Link to="/pricing" className="block text-white/80 hover:text-white transition-colors">
+              <Link
+                to="/pricing"
+                className="block text-white/80 hover:text-white transition-colors"
+              >
                 Pricing
               </Link>
-              <Link to="/level-test" className="block text-white/80 hover:text-white transition-colors">
+              <Link
+                to="/level-test"
+                className="block text-white/80 hover:text-white transition-colors"
+              >
                 Level Test
               </Link>
-              <Link to="/success-stories" className="block text-white/80 hover:text-white transition-colors">
+              <Link
+                to="/success-stories"
+                className="block text-white/80 hover:text-white transition-colors"
+              >
                 Success Stories
               </Link>
-              <Link to="/trainers" className="block text-white/80 hover:text-white transition-colors">
+              <Link
+                to="/trainers"
+                className="block text-white/80 hover:text-white transition-colors"
+              >
                 Our Trainers
               </Link>
             </div>
@@ -59,19 +104,34 @@ const Footer = () => {
           <div>
             <h3 className="font-poppins font-semibold text-lg mb-6">Programs</h3>
             <div className="space-y-3">
-              <Link to="/courses/spoken-english" className="block text-white/80 hover:text-white transition-colors">
+              <Link
+                to="/courses/spoken-english"
+                className="block text-white/80 hover:text-white transition-colors"
+              >
                 Spoken English
               </Link>
-              <Link to="/courses/business-communication" className="block text-white/80 hover:text-white transition-colors">
+              <Link
+                to="/courses/business-communication"
+                className="block text-white/80 hover:text-white transition-colors"
+              >
                 Business Communication
               </Link>
-              <Link to="/courses/interview-prep" className="block text-white/80 hover:text-white transition-colors">
+              <Link
+                to="/courses/interview-prep"
+                className="block text-white/80 hover:text-white transition-colors"
+              >
                 Interview Preparation
               </Link>
-              <Link to="/courses/public-speaking" className="block text-white/80 hover:text-white transition-colors">
+              <Link
+                to="/courses/public-speaking"
+                className="block text-white/80 hover:text-white transition-colors"
+              >
                 Public Speaking
               </Link>
-              <Link to="/courses/leadership" className="block text-white/80 hover:text-white transition-colors">
+              <Link
+                to="/courses/leadership"
+                className="block text-white/80 hover:text-white transition-colors"
+              >
                 Leadership Training
               </Link>
             </div>
@@ -79,19 +139,21 @@ const Footer = () => {
 
           {/* Contact */}
           <div>
-            <h3 className="font-poppins font-semibold text-lg mb-6">Contact Us</h3>
+            <h3 className="font-poppins font-semibold text-lg mb-6">
+              Contact Us
+            </h3>
             <div className="space-y-4">
               <div className="flex items-center space-x-3">
                 <Phone className="w-5 h-5 text-secondary" />
-                <span className="text-white/80">+91-9876543210</span>
+                <span className="text-white/80">+91-9445102902</span>
               </div>
               <div className="flex items-center space-x-3">
                 <Mail className="w-5 h-5 text-secondary" />
-                <span className="text-white/80">hello@edushetra.com</span>
+                <span className="text-white/80">info@edushetra.com</span>
               </div>
               <div className="mt-6">
-                <Link 
-                  to="/referral" 
+                <Link
+                  to="/referral"
                   className="inline-block bg-accent text-primary px-4 py-2 rounded-lg font-medium hover:bg-accent/90 transition-colors"
                 >
                   Become a Referrer
@@ -105,13 +167,33 @@ const Footer = () => {
         <div className="border-t border-white/20 mt-12 pt-8">
           <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
             <div className="flex flex-wrap gap-6 text-sm text-white/60">
-              <Link to="/terms" className="hover:text-white transition-colors">Terms & Conditions</Link>
-              <Link to="/privacy" className="hover:text-white transition-colors">Privacy Policy</Link>
-              <Link to="/refund-policy" className="hover:text-white transition-colors">Refund Policy</Link>
-              <Link to="/teach" className="hover:text-white transition-colors">Careers</Link>
+              <Link
+                to="/terms"
+                className="hover:text-white transition-colors"
+              >
+                Terms & Conditions
+              </Link>
+              <Link
+                to="/privacy"
+                className="hover:text-white transition-colors"
+              >
+                Privacy Policy
+              </Link>
+              <Link
+                to="/refund-policy"
+                className="hover:text-white transition-colors"
+              >
+                Refund Policy
+              </Link>
+              <Link
+                to="/teach"
+                className="hover:text-white transition-colors"
+              >
+                Careers
+              </Link>
             </div>
             <p className="text-white/60 text-sm">
-              © 2024 Edushetra. All rights reserved.
+              © 2025 EduShetra. All rights reserved.
             </p>
           </div>
         </div>
