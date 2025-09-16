@@ -34,6 +34,11 @@ const BookDemo = () => {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const { toast } = useToast();
 
+    // Preselect program from ?program=
+  const programFromQuery = new URLSearchParams(window.location.search).get("program") ?? "";
+   const urlParams = new URLSearchParams(window.location.search);
+   const referringPage = urlParams.get("ref") ?? "home";  
+
   const form = useForm<FormData>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -44,7 +49,7 @@ const BookDemo = () => {
       currentLevel: "",
       goal: "",
       preferredTime: "",
-      programInterest: "",
+      programInterest: programFromQuery,
       consent: false,
     },
   });
@@ -70,7 +75,8 @@ const BookDemo = () => {
         consent: data.consent,
         utm_source: utmSource,
         utm_medium: utmMedium,
-        utm_campaign: utmCampaign
+        utm_campaign: utmCampaign,
+        referring_page: referringPage,
       });
 
       if (error) {

@@ -47,11 +47,16 @@ const Navbar = () => {
               Home
             </Link>
 
-            <div className="relative group">
+            {/* Courses Dropdown */}
+            <div
+              className="relative"
+              onMouseEnter={() => setIsCoursesOpen(true)}
+              onMouseLeave={() => setIsCoursesOpen(false)}
+            >
               <button
                 className="flex items-center space-x-1 font-medium text-primary hover:text-secondary transition-colors duration-200"
-                onMouseEnter={() => setIsCoursesOpen(true)}
-                onMouseLeave={() => setIsCoursesOpen(false)}
+                aria-haspopup="menu"
+                aria-expanded={isCoursesOpen}
               >
                 <span>Courses</span>
                 <ChevronDown className="w-4 h-4" />
@@ -59,37 +64,41 @@ const Navbar = () => {
 
               {isCoursesOpen && (
                 <div
-                  className="absolute top-full left-0 mt-2 w-64 bg-white rounded-2xl shadow-elegant border border-slate-100 py-4"
-                  onMouseEnter={() => setIsCoursesOpen(true)}
-                  onMouseLeave={() => setIsCoursesOpen(false)}
+                  className="absolute top-full left-0 mt-2 w-64 bg-white rounded-2xl shadow-elegant border border-slate-100 py-4 z-50"
+                  role="menu"
                 >
                   <Link
                     to="/courses/spoken-english"
                     className="block px-6 py-2 text-primary hover:text-secondary hover:bg-slate-50 transition-colors"
+                    role="menuitem"
                   >
                     Spoken English
                   </Link>
                   <Link
                     to="/courses/business-communication"
                     className="block px-6 py-2 text-primary hover:text-secondary hover:bg-slate-50 transition-colors"
+                    role="menuitem"
                   >
                     Business Communication
                   </Link>
                   <Link
-                    to="/courses/interview-prep"
+                    to="/courses/interview-preparation"
                     className="block px-6 py-2 text-primary hover:text-secondary hover:bg-slate-50 transition-colors"
+                    role="menuitem"
                   >
                     Interview Preparation
                   </Link>
                   <Link
                     to="/courses/public-speaking"
                     className="block px-6 py-2 text-primary hover:text-secondary hover:bg-slate-50 transition-colors"
+                    role="menuitem"
                   >
                     Public Speaking
                   </Link>
                   <Link
-                    to="/courses/leadership"
+                    to="/courses/leadership-training"
                     className="block px-6 py-2 text-primary hover:text-secondary hover:bg-slate-50 transition-colors"
+                    role="menuitem"
                   >
                     Leadership Training
                   </Link>
@@ -160,10 +169,34 @@ const Navbar = () => {
                 Home
               </Link>
               <Link
-                to="/courses"
+                to="/courses/spoken-english"
                 className="font-medium text-primary hover:text-secondary transition-colors"
               >
-                Courses
+                Spoken English
+              </Link>
+              <Link
+                to="/courses/business-communication"
+                className="font-medium text-primary hover:text-secondary transition-colors"
+              >
+                Business Communication
+              </Link>
+              <Link
+                to="/courses/interview-preparation"
+                className="font-medium text-primary hover:text-secondary transition-colors"
+              >
+                Interview Preparation
+              </Link>
+              <Link
+                to="/courses/public-speaking"
+                className="font-medium text-primary hover:text-secondary transition-colors"
+              >
+                Public Speaking
+              </Link>
+              <Link
+                to="/courses/leadership-training"
+                className="font-medium text-primary hover:text-secondary transition-colors"
+              >
+                Leadership Training
               </Link>
               <Link
                 to="/pricing"

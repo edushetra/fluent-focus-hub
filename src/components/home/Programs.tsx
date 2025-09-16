@@ -3,13 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Link } from "react-router-dom";
-import {
-  Clock,
-  Users,
-  Calendar as CalIcon,
-  CheckCircle,
-  ChevronDown,
-} from "lucide-react";
+import { Clock, Users, Calendar as CalIcon, CheckCircle, ChevronDown } from "lucide-react";
 
 type Program = {
   title: string;
@@ -19,13 +13,13 @@ type Program = {
   groupSize?: string;
   timings?: string;
   flexibility?: string;
-  price: string;            // keep human-readable text (₹ included)
-  upfrontPrice?: string;    // human-readable
+  price: string;          // human-readable
+  upfrontPrice?: string;
   bestFor: string[];
   activities: string[];
   popular?: boolean;
-  href: string;
-  format?: string;
+  href: string;           // “learn more” route if you add later
+  programId: "1-on-1" | "small-group" | "big-group" | "leadership";
 };
 
 const programs: Program[] = [
@@ -42,6 +36,7 @@ const programs: Program[] = [
     activities: ["Speech therapy drills", "Vocabulary sprints", "Structured thinking", "Business comms"],
     popular: false,
     href: "/courses/one-on-one",
+    programId: "1-on-1",
   },
   {
     title: "Small Group Classes",
@@ -57,6 +52,7 @@ const programs: Program[] = [
     activities: ["Group discussions", "Debates", "Mock interviews", "Presentation labs"],
     popular: true,
     href: "/courses/small-group",
+    programId: "small-group",
   },
   {
     title: "Big Group Classes",
@@ -64,42 +60,45 @@ const programs: Program[] = [
     frequency: "Alternate days",
     sessionLength: "75 min / session",
     timings: "Fixed weekend & weekday batches",
-    price: "₹899 one-time",
+    // per requirement: contact for price
+    price: "Contact for price",
     bestFor: ["First-time learners", "Budget-seekers", "Confidence building"],
     activities: ["Weekly workshops", "Fluency drills", "Storytelling", "Group challenges"],
     popular: false,
     href: "/courses/big-group",
+    programId: "big-group",
   },
   {
     title: "Leadership Training",
-    format: "Cohort (6–10) or 1:1",
+    groupSize: "Cohort (6–10) or 1:1",
+    timings: "Flexible",
     price: "Contact for price",
     bestFor: ["CXOs", "Team leads", "Managers", "Public speakers"],
     activities: ["Leader roundtables", "Recording reviews", "Personalized feedback"],
     popular: false,
     href: "/courses/leadership",
+    programId: "leadership",
   },
 ];
 
-function LineItem({
-  icon,
-  children,
-}: {
-  icon: React.ReactNode;
-  children: React.ReactNode;
-}) {
+function LineItem({ icon, children }: { icon: React.ReactNode; children: React.ReactNode }) {
   return (
     <div className="flex items-center text-sm text-muted-foreground">
-      <span className="w-4 h-4 mr-2 text-secondary flex items-center justify-center">
-        {icon}
-      </span>
+      <span className="w-4 h-4 mr-2 text-secondary flex items-center justify-center">{icon}</span>
       <span>{children}</span>
     </div>
   );
 }
 
+const ctaFor = (p: Program) => {
+  const isDemo = p.programId === "1-on-1" || p.programId === "small-group";
+  return isDemo
+    ? { label: "Book Demo", to: `/book-demo?program=${encodeURIComponent(p.programId)}` }
+    : { label: "Enquire Now", to: `/enquire?program=${encodeURIComponent(p.programId)}` };
+};
+
 const Programs = () => {
-  // Mobile accordion: open one card at a time
+  // Mobile accordion
   const [openKey, setOpenKey] = useState<string | null>(null);
 
   return (
@@ -119,6 +118,7 @@ const Programs = () => {
           {programs.map((p) => {
             const key = p.title;
             const open = openKey === key;
+            const cta = ctaFor(p);
             return (
               <Card key={key} className={`relative ${p.popular ? "ring-2 ring-secondary" : ""}`}>
                 {p.popular && (
@@ -134,9 +134,7 @@ const Programs = () => {
                   aria-controls={`panel-${key}`}
                 >
                   <div>
-                    <CardTitle className="font-poppins text-xl text-primary">
-                      {p.title}
-                    </CardTitle>
+                    <CardTitle className="font-poppins text-xl text-primary">{p.title}</CardTitle>
                     <p className="text-sm text-slate-700 mt-1">{p.price}</p>
                   </div>
                   <ChevronDown className={`h-5 w-5 transition-transform ${open ? "rotate-180" : ""}`} />
@@ -144,26 +142,21 @@ const Programs = () => {
 
                 <div
                   id={`panel-${key}`}
-                  className={`grid transition-[grid-template-rows] duration-300 ease-out ${open ? "grid-rows-[1fr]" : "grid-rows-[0fr]"}`}
+                  className={`grid transition-[grid-template-rows] duration-300 ease-out ${
+                    open ? "grid-rows-[1fr]" : "grid-rows-[0fr]"
+                  }`}
                 >
                   <div className="overflow-hidden">
                     <CardContent className="pt-0 pb-4">
                       <div className="space-y-3">
                         {p.duration && (
                           <LineItem icon={<CalIcon className="w-4 h-4" />}>
-                            {p.duration}{p.frequency ? ` • ${p.frequency}` : ""}
+                            {p.duration}
+                            {p.frequency ? ` • ${p.frequency}` : ""}
                           </LineItem>
                         )}
-                        {p.sessionLength && (
-                          <LineItem icon={<Clock className="w-4 h-4" />}>
-                            {p.sessionLength}
-                          </LineItem>
-                        )}
-                        {p.groupSize && (
-                          <LineItem icon={<Users className="w-4 h-4" />}>
-                            {p.groupSize}
-                          </LineItem>
-                        )}
+                        {p.sessionLength && <LineItem icon={<Clock className="w-4 h-4" />}>{p.sessionLength}</LineItem>}
+                        {p.groupSize && <LineItem icon={<Users className="w-4 h-4" />}>{p.groupSize}</LineItem>}
                         {p.timings && (
                           <div className="text-sm text-muted-foreground">
                             <span className="font-medium">Timings:</span> {p.timings}
@@ -175,11 +168,7 @@ const Programs = () => {
                           </div>
                         )}
 
-                        {p.upfrontPrice && (
-                          <p className="text-sm text-muted-foreground">
-                            or {p.upfrontPrice} upfront
-                          </p>
-                        )}
+                        {p.upfrontPrice && <p className="text-sm text-muted-foreground">or {p.upfrontPrice} upfront</p>}
 
                         <div>
                           <h4 className="font-semibold text-primary mb-2">Best suited for:</h4>
@@ -205,7 +194,7 @@ const Programs = () => {
                         </div>
 
                         <Button asChild className="w-full btn-hero mt-2">
-                          <Link to={p.href}>Learn More</Link>
+                          <Link to={cta.to}>{cta.label}</Link>
                         </Button>
                       </div>
                     </CardContent>
@@ -216,82 +205,86 @@ const Programs = () => {
           })}
         </div>
 
-        {/* Tablet/Desktop: original full cards grid */}
+        {/* Desktop: fixed-bottom CTA inside equal-height cards */}
         <div className="hidden sm:grid lg:grid-cols-2 xl:grid-cols-4 gap-8">
-          {programs.map((program) => (
-            <Card key={program.title} className={`program-card relative ${program.popular ? "ring-2 ring-secondary" : ""}`}>
-              {program.popular && (
-                <Badge className="absolute -top-3 left-1/2 -translate-x-1/2 bg-secondary text-white px-4 py-1">
-                  Most Popular
-                </Badge>
-              )}
+          {programs.map((p) => {
+            const cta = ctaFor(p);
+            return (
+              <Card
+                key={p.title}
+                className={`program-card relative ${p.popular ? "ring-2 ring-secondary" : ""} flex flex-col`}
+              >
+                {p.popular && (
+                  <Badge className="absolute -top-3 left-1/2 -translate-x-1/2 bg-secondary text-white px-4 py-1">
+                    Most Popular
+                  </Badge>
+                )}
 
-              <CardHeader className="pb-4">
-                <CardTitle className="font-poppins text-2xl text-primary mb-2">
-                  {program.title}
-                </CardTitle>
-                <div className="space-y-1">
-                  <div className="text-2xl font-bold text-secondary">{program.price}</div>
-                  {program.upfrontPrice && (
-                    <p className="text-sm text-muted-foreground">or {program.upfrontPrice} upfront</p>
-                  )}
-                </div>
-              </CardHeader>
-
-              <CardContent className="space-y-6">
-                <div className="space-y-3">
-                  {program.duration && (
-                    <LineItem icon={<CalIcon className="w-4 h-4" />}>
-                      {program.duration}{program.frequency ? ` • ${program.frequency}` : ""}
-                    </LineItem>
-                  )}
-                  {program.sessionLength && (
-                    <LineItem icon={<Clock className="w-4 h-4" />}>{program.sessionLength}</LineItem>
-                  )}
-                  {program.groupSize && (
-                    <LineItem icon={<Users className="w-4 h-4" />}>{program.groupSize}</LineItem>
-                  )}
-                  {program.timings && (
-                    <div className="text-sm text-muted-foreground">
-                      <span className="font-medium">Timings:</span> {program.timings}
-                    </div>
-                  )}
-                  {program.flexibility && (
-                    <div className="text-sm text-success-foreground bg-success/20 px-3 py-2 rounded-lg">
-                      {program.flexibility}
-                    </div>
-                  )}
-                </div>
-
-                <div>
-                  <h4 className="font-semibold text-primary mb-2">Best suited for:</h4>
-                  <div className="flex flex-wrap gap-2">
-                    {program.bestFor.map((item) => (
-                      <Badge key={item} variant="outline" className="text-xs">
-                        {item}
-                      </Badge>
-                    ))}
+                <CardHeader className="pb-4">
+                  <CardTitle className="font-poppins text-2xl text-primary mb-2">{p.title}</CardTitle>
+                  <div className="space-y-1">
+                    <div className="text-2xl font-bold text-secondary">{p.price}</div>
+                    {p.upfrontPrice && (
+                      <p className="text-sm text-muted-foreground">or {p.upfrontPrice} upfront</p>
+                    )}
                   </div>
-                </div>
+                </CardHeader>
 
-                <div>
-                  <h4 className="font-semibold text-primary mb-2">Key activities:</h4>
-                  <ul className="space-y-1">
-                    {program.activities.slice(0, 3).map((activity) => (
-                      <li key={activity} className="flex items-start text-sm text-muted-foreground">
-                        <CheckCircle className="w-3 h-3 mr-2 text-success mt-0.5 flex-shrink-0" />
-                        <span>{activity}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
+                <CardContent className="space-y-6 flex-1 flex flex-col">
+                  <div className="space-y-3">
+                    {p.duration && (
+                      <LineItem icon={<CalIcon className="w-4 h-4" />}>
+                        {p.duration}
+                        {p.frequency ? ` • ${p.frequency}` : ""}
+                      </LineItem>
+                    )}
+                    {p.sessionLength && <LineItem icon={<Clock className="w-4 h-4" />}>{p.sessionLength}</LineItem>}
+                    {p.groupSize && <LineItem icon={<Users className="w-4 h-4" />}>{p.groupSize}</LineItem>}
+                    {p.timings && (
+                      <div className="text-sm text-muted-foreground">
+                        <span className="font-medium">Timings:</span> {p.timings}
+                      </div>
+                    )}
+                    {p.flexibility && (
+                      <div className="text-sm text-success-foreground bg-success/20 px-3 py-2 rounded-lg">
+                        {p.flexibility}
+                      </div>
+                    )}
+                  </div>
 
-                <Button asChild className="w-full btn-hero">
-                  <Link to={program.href}>Learn More</Link>
-                </Button>
-              </CardContent>
-            </Card>
-          ))}
+                  <div>
+                    <h4 className="font-semibold text-primary mb-2">Best suited for:</h4>
+                    <div className="flex flex-wrap gap-2">
+                      {p.bestFor.map((item) => (
+                        <Badge key={item} variant="outline" className="text-xs">
+                          {item}
+                        </Badge>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div>
+                    <h4 className="font-semibold text-primary mb-2">Key activities:</h4>
+                    <ul className="space-y-1">
+                      {p.activities.slice(0, 3).map((a) => (
+                        <li key={a} className="flex items-start text-sm text-muted-foreground">
+                          <CheckCircle className="w-3 h-3 mr-2 text-success mt-0.5 flex-shrink-0" />
+                          <span>{a}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+
+                  {/* fixed to bottom via mt-auto */}
+                  <div className="mt-auto">
+                    <Button asChild className="w-full btn-hero">
+                      <Link to={cta.to}>{cta.label}</Link>
+                    </Button>
+                  </div>
+                </CardContent>
+              </Card>
+            );
+          })}
         </div>
 
         {/* Bottom CTA */}
