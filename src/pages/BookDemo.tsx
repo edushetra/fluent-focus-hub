@@ -22,7 +22,7 @@ const formSchema = z.object({
   email: z.string().email("Please enter a valid email address"),
   city: z.string().min(2, "Please enter your city"),
   currentLevel: z.string().min(1, "Please select your current level"),
-  goal: z.string().min(10, "Please describe your goal (at least 10 characters)"),
+  goal: z.string().optional(),
   preferredTime: z.string().min(1, "Please select your preferred time"),
   programInterest: z.string().min(1, "Please select a program"),
   consent: z.boolean().refine(val => val === true, "Please agree to our terms"),
