@@ -23,6 +23,7 @@ import BusinessCommunication from "@/pages/courses/BusinessCommunication";
 import InterviewPreparation from "@/pages/courses/InterviewPreparation";
 import PublicSpeaking from "@/pages/courses/PublicSpeaking";
 import LeadershipTraining from "@/pages/courses/LeadershipTraining";
+import TutorApplication from "@/pages/TutorApplication";
 
 // ⬇️ NEW: scroll-to-top utility
 import ScrollToTop from "@/components/routing/ScrollToTop";
@@ -60,6 +61,7 @@ const App = () => (
           <Route path="/courses/interview-preparation" element={<InterviewPreparation />} />
           <Route path="/courses/public-speaking" element={<PublicSpeaking />} />
           <Route path="/courses/leadership-training" element={<LeadershipTraining />} />
+          <Route path="/apply/tutor" element={<TutorApplication />} />
 
           {/* 404 catch-all */}
           <Route path="*" element={<NotFound />} />

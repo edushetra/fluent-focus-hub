@@ -305,7 +305,7 @@ const BookDemo = () => {
                         name="goal"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>Your Learning Goal *</FormLabel>
+                            <FormLabel>Your Learning Goal </FormLabel>
                             <FormControl>
                               <Textarea 
                                 placeholder="Tell us what you want to achieve (e.g., improve interview skills, speak confidently at work, overcome stage fear...)"
@@ -390,7 +390,7 @@ const BookDemo = () => {
                     Have questions? Our counselors are here to help.
                   </p>
                   <Button asChild variant="outline" className="w-full">
-                    <a href="tel:+919876543210">Call +91-9876543210</a>
+                    <a href="tel:+919876543210">Call +91-9445102902</a>
                   </Button>
                 </CardContent>
               </Card>

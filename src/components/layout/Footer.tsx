@@ -71,10 +71,16 @@ const Footer = () => {
               <Link to="/level-test" className="block text-white/80 hover:text-white transition-colors">
                 Level Test
               </Link>
-              <Link to="/success-stories" className="block text-white/80 hover:text-white transition-colors">
+              {/* <Link to="/success-stories" className="block text-white/80 hover:text-white transition-colors">
                 Success Stories
-              </Link>
-              <Link to="/trainers" className="block text-white/80 hover:text-white transition-colors">
+              </Link> */}
+              <a href="/#success-stories" className="block text-white/80 hover:text-white transition-colors">
+                Success Stories
+              </a>
+              {/* <Link to="/trainers" className="block text-white/80 hover:text-white transition-colors">
+                Our Trainers
+              </Link> */}
+              <Link className="block text-white/80 hover:text-white transition-colors">
                 Our Trainers
               </Link>
             </div>
@@ -121,11 +127,18 @@ const Footer = () => {
                 <span className="text-white/80">info@edushetra.com</span>
               </div>
               <div className="mt-6">
-                <Link
+                {/* <Link
                   to="/referral"
                   className="inline-block bg-accent text-primary px-4 py-2 rounded-lg font-medium hover:bg-accent/90 transition-colors"
                 >
                   Become a Referrer
+                </Link> */}
+
+                <Link
+                  to="/apply/tutor"
+                  className="inline-block bg-accent text-primary px-4 py-2 rounded-lg font-medium hover:bg-accent/90 transition-colors"
+                >
+                  Become a Tutor!
                 </Link>
               </div>
             </div>

@@ -20,7 +20,7 @@ const schema = z.object({
   whatsapp: z.string().regex(/^[6-9]\d{9}$/, "Enter a valid 10-digit WhatsApp number"),
   email: z.string().email("Enter a valid email"),
   programInterest: z.enum(["1-on-1", "small-group", "big-group", "leadership"], { required_error: "Select a program" }),
-  message: z.string().min(10, "Tell us a bit about your requirement (min 10 chars)"),
+  message: z.string().optional(),
   consent: z.boolean().refine((v) => v, "Please agree to our terms"),
 });
 type FormData = z.infer<typeof schema>;
@@ -181,7 +181,7 @@ const Enquire = () => {
                     name="message"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Your requirement *</FormLabel>
+                        <FormLabel>Your requirement </FormLabel>
                         <FormControl>
                           <Textarea
                             className="min-h-[100px]"
